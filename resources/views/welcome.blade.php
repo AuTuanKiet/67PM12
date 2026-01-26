@@ -272,7 +272,7 @@
 
         <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
             <a href="{{ route('sinhvien.info') }}" style="padding:8px 12px; background:#1b1b18; color:white; border-radius:4px;">Sinh viên mặc định</a>
-            <a href="{{ route('sinhvien.info', ['name' => 'Au Tuan Kiet', 'mssv' => '3000467']) }}" style="padding:8px 12px; background:#f53003; color:white; border-radius:4px;">Sinh viên khác</a>
+            <a href="{{ route('sinhvien.info', ['name' => 'Âu Tuấn Kiệt', 'mssv' => '3000467']) }}" style="padding:8px 12px; background:#f53003; color:white; border-radius:4px;">Sinh viên khác</a>
             <a href="{{ route('banco.show', ['n' => 8]) }}" style="padding:8px 12px; background:#007bff; color:white; border-radius:4px;">Xem bàn cờ 8x8</a>
         </div>
 

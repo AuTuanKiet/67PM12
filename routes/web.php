@@ -41,7 +41,7 @@ Route::prefix('product')->group(function() {
 });
 
 // Route thông tin sinh viên (mặc định name, mssv)
-Route::get('/sinhvien/{name?}/{mssv?}', function($name = 'Luong Xuan Hieu', $mssv = '123456') {
+Route::get('/sinhvien/{name?}/{mssv?}', function($name = 'Lương Xuân Hiếu', $mssv = '123456') {
     return "Sinh viên: {$name} - MSSV: {$mssv}";
 })->name('sinhvien.info');
 
