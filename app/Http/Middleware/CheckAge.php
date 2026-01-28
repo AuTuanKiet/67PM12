@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class CheckAge {
+    public function handle(Request $request, Closure $next): Response {
+        $age = (int) $request->input('age', 0);
+        if ($age < 18) {
+            return response()->json([
+                'message' => 'Bạn chưa đủ 18 tuổi để đăng nhập.',
+            ], 403);
+        }
+
+        return $next($request);
+    }
+}

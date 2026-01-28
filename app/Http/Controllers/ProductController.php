@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\CheckTimeAccess;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class ProductController extends Controller
+class ProductController extends Controller implements HasMiddleware
 {
     //
+    public static function middleware(): array {
+        return [
+            CheckTimeAccess::class,
+        ];
+    }
+
     public function index() {
         $title = "Danh sách sản phẩm";
         return view('product.index', ['title' => $title,
@@ -28,15 +36,24 @@ class ProductController extends Controller
         return view('product.add');
     }
 
-    public function store(Request $request) {
-        return $request->all();
+    public function store(Request $request) { 
+        
+    }
+
+    public function login() {
+        return view('login');
     }
 
     public function checkLogin(Request $request) {
-        if($request->input('username') === 'hieulx' && $request->input('password') === '123456') {
-            return "Đăng nhập thành công!";
-        } else {
-            return "Đăng nhập thất bại!";
+        $isValid = $request->input('username') === 'hieulx'
+        && $request->input('password') === '123456';
+
+        if ($isValid) {
+            return back()->with('success', 'Đăng nhập thành công!');
         }
+
+        return back()
+            ->withInput()
+            ->with('error', 'Tên tài khoản hoặc mật khẩu không đúng!');
     }
 }

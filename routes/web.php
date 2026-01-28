@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TestController;
+use App\Http\Middleware\CheckTimeAccess;
+use App\Http\Middleware\CheckAge;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,24 +23,16 @@ Route::get('/login', function () {
     return view('login');
 });
 
-Route::post('/product/checklogin', [ProductController::class, 'checkLogin']);
+Route::post('/product/checklogin', [ProductController::class, 'checklogin'])->middleware([CheckAge::class]);
 
 // Gom nhóm các route product
 Route::prefix('product')->group(function() {
     Route::controller(ProductController::class)->group(function() {
-        Route::get('/', 'index');
+        Route::get('/', 'index')->middleware([CheckTimeAccess::class]);
         Route::get('/add', 'create')->name('add');
-        Route::get('/detail/{id?}', 'get');
+        Route::get('/detail/{id?}', 'get')->name('product.detail');
         Route::post('/store', 'store');
     });
-    /* // Route danh sách sản phẩm
-    Route::get('/', [ProductController::class, 'index']);
-
-    // Route thêm mới sản phẩm
-    Route::get('/add', [ProductController::class, 'create'])->name('add');
-
-    // Route chi tiết sản phẩm với id kiểu chuỗi, mặc định 123
-    Route::get('/detail/{id?}', [ProductController::class, 'get']); */
 });
 
 // Route thông tin sinh viên (mặc định name, mssv)
@@ -50,6 +45,8 @@ Route::get('/banco/{n}', function(int $n) {
     $size = max(1, $n);
     return view('banco', ['n' => $size]);
 })->whereNumber('n')->name('banco.show');
+
+Route::resource('test', TestController::class);
 
 // Route fallback khi không tìm thấy
 Route::fallback(function() {

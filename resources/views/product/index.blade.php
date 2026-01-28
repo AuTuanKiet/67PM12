@@ -102,7 +102,7 @@
                         <td>{{ $product['name'] }}</td>
                         <td>{{ $product['price'] }}</td>
                         <td>{{ $product['description'] }}</td>
-                        <td><a href="/product/{id}" class="btn-detail">Chi tiết</a></td>
+                        <td><a href="{{ route('product.detail', ['id' => $product['id']]) }}" class="btn-detail">Chi tiết</a></td>
                     </tr>
                 @endforeach
             </tbody>

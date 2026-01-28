@@ -82,17 +82,17 @@
         
         <form action="/product/store" method="POST">
             <div class="form-group">
-                <label for="product_id">Mã sản phẩm *</label>
+                <label for="product_id">Mã sản phẩm <span style="color:red">*</span></label>
                 <input type="text" id="product_id" name="product_id" required placeholder="Ví dụ: SP006">
             </div>
 
             <div class="form-group">
-                <label for="product_name">Tên sản phẩm *</label>
+                <label for="product_name">Tên sản phẩm <span style="color:red">*</span></label>
                 <input type="text" id="product_name" name="product_name" required placeholder="Nhập tên sản phẩm">
             </div>
 
             <div class="form-group">
-                <label for="price">Giá (VNĐ) *</label>
+                <label for="price">Giá (VNĐ) <span style="color:red">*</span></label>
                 <input type="number" id="price" name="price" required placeholder="Nhập giá sản phẩm" min="0">
             </div>
 
