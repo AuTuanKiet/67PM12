@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\AuthController;
 use App\Http\Middleware\CheckTimeAccess;
 use App\Http\Middleware\CheckAge;
 
@@ -22,6 +23,10 @@ Route::get('/home', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+// Route đăng ký tài khoản
+Route::get('/signin', [AuthController::class, 'signIn'])->name('auth.signin');
+Route::post('/auth/checksignin', [AuthController::class, 'checkSignIn'])->name('auth.checksignin');
 
 Route::post('/product/checklogin', [ProductController::class, 'checklogin'])->middleware([CheckAge::class]);
 
