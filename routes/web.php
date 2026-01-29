@@ -30,6 +30,10 @@ Route::post('/auth/checksignin', [AuthController::class, 'checkSignIn'])->name('
 
 Route::post('/product/checklogin', [ProductController::class, 'checklogin'])->middleware([CheckAge::class]);
 
+// Routes xác nhận tuổi
+Route::get('/age', [AuthController::class, 'showAgeForm'])->name('age.form');
+Route::post('/age/verify', [AuthController::class, 'verifyAge'])->name('age.verify');
+
 // Gom nhóm các route product
 Route::prefix('product')->group(function() {
     Route::controller(ProductController::class)->group(function() {
