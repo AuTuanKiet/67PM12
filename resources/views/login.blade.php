@@ -142,10 +142,6 @@
                     <label for="password">Mật khẩu</label>
                     <input type="password" id="password" name="password" class="field" placeholder="Nhập mật khẩu" required>
                 </div>
-                <div class="group">
-                    <label for="age">Tuổi</label>
-                    <input type="number" id="age" name="age" class="field" placeholder="Nhập tuổi của bạn" min="1" required>
-                </div>
                 <div class="actions">
                     <button type="submit" class="btn btn-primary">Đăng nhập</button>
                     <a href="/home" class="btn btn-ghost">Về trang chủ</a>
