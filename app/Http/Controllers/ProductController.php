@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\CheckTimeAccess;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 
@@ -16,20 +17,13 @@ class ProductController extends Controller implements HasMiddleware
     }
 
     public function index() {
-        $title = "Danh sách sản phẩm";
-        return view('product.index', ['title' => $title,
-            'products' => [
-                ['id'=>'SP001', 'name'=>'Laptop Dell XPS 13', 'price'=>'25.000.000 VNĐ', 'description'=>'Laptop cao cấp, hiệu năng mạnh mẽ'],
-                ['id'=>'SP002', 'name'=>'iPhone 15 Pro Max', 'price'=>'35.000.000 VNĐ', 'description'=>'Điện thoại flagship của Apple'],
-                ['id'=>'SP003', 'name'=>'Samsung Galaxy S24 Ultra', 'price'=>'30.000.000 VNĐ', 'description'=>'Smartphone cao cấp của Samsung'],
-                ['id'=>'SP004', 'name'=>'MacBook Pro M3', 'price'=>'45.000.000 VNĐ', 'description'=>'Laptop chuyên nghiệp cho designer'],
-                ['id'=>'SP005', 'name'=>'AirPods Pro 2', 'price'=>'6.000.000 VNĐ', 'description'=>'Tai nghe không dây chống ồn'],
-            ]
-        ]);
+        $products = Product::all();
+        return view('product.index', compact('products'));
     }
 
-    public function get(string $id='123') {
-        return view('product.detail', ['id' => $id]);
+    public function get(string $id) {
+        $product = Product::findOrFail($id);
+        return view('product.detail', compact('product'));
     }
 
     public function create() {
@@ -37,7 +31,39 @@ class ProductController extends Controller implements HasMiddleware
     }
 
     public function store(Request $request) { 
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        Product::create($data);
+        return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công');
+    }
+
+    public function edit(string $id) {
+        $product = Product::findOrFail($id);
+        return view('product.edit', compact('product'));
+    }
+
+    public function update(Request $request, string $id) {
+        $product = Product::findOrFail($id);
         
+        $data = $request->validate([
+            'name'  => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+    ]);
+
+        $product->update($data);
+        return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công');
+    }
+
+    public function destroy(string $id) {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('product.index')->with('success', 'Xóa sản phẩm thành công');
     }
 
     public function login() {
@@ -45,8 +71,7 @@ class ProductController extends Controller implements HasMiddleware
     }
 
     public function checkLogin(Request $request) {
-        $isValid = $request->input('username') === 'hieulx'
-        && $request->input('password') === '123456';
+        $isValid = $request->input('username') === 'hieulx' && $request->input('password') === '123456';
 
         if ($isValid) {
             return back()->with('success', 'Đăng nhập thành công!');

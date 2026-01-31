@@ -74,12 +74,41 @@
         .btn-home:hover {
             background-color: #5a6268;
         }
+        .btn-edit {
+            padding: 5px 15px;
+            background-color: #ffc107;
+            color: white;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+        .btn-delete {
+            padding: 5px 15px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 3px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
+    <h1>Danh sách sản phẩm</h1>
     <div class="container">
-        <h1>{{ $title }}</h1>
-        
+        @if (session('success'))
+            <div style="margin: 12px 0; padding: 12px; background: #ecfdf3; color: #166534; border-radius: 8px; border: 1px solid #bbf7d0;">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div>
             <a href="/home" class="btn-home">← Trang chủ</a>
             <a href="/product/add" class="btn">+ Thêm mới sản phẩm</a>
@@ -90,19 +119,27 @@
                 <tr>
                     <th>ID</th>
                     <th>Tên sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Mô tả</th>
+                    <th>Giá (VNĐ)</th>
+                    <th>Số lượng</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <td>{{ $product['id'] }}</td>
-                        <td>{{ $product['name'] }}</td>
-                        <td>{{ $product['price'] }}</td>
-                        <td>{{ $product['description'] }}</td>
-                        <td><a href="{{ route('product.detail', ['id' => $product['id']]) }}" class="btn-detail">Chi tiết</a></td>
+                        <td>{{ $product->id }}</td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->price }}</td>
+                        <td>{{ $product->stock }}</td>
+                        <td style="display: flex; gap: 6px; align-items: center;">
+                            <a href="{{ route('product.detail', $product->id) }}" class="btn-detail">Chi tiết</a>
+                            <a href="{{ route('product.edit', $product->id) }}" class="btn-edit">Sửa</a>
+                            <form action="{{ route('product.destroy', $product->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');">Xóa</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

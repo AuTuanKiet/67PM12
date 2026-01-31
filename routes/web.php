@@ -37,10 +37,13 @@ Route::post('/age/verify', [AuthController::class, 'verifyAge'])->name('age.veri
 // Gom nhóm các route product
 Route::prefix('product')->group(function() {
     Route::controller(ProductController::class)->group(function() {
-        Route::get('/', 'index')->middleware([CheckTimeAccess::class]);
+        Route::get('/', 'index')->middleware([CheckTimeAccess::class])->name('product.index');
         Route::get('/add', 'create')->name('add');
         Route::get('/detail/{id?}', 'get')->name('product.detail');
-        Route::post('/store', 'store');
+        Route::get('/edit/{id}', 'edit')->name('product.edit');
+        Route::put('/update/{id}', 'update')->name('product.update');
+        Route::post('/store', 'store')->name('product.store');
+        Route::delete('/delete/{id}', 'destroy')->name('product.destroy');
     });
 });
 

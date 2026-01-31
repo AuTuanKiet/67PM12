@@ -20,7 +20,7 @@ class CheckTimeAccess
     {
         $now = Carbon::now();
         $start = Carbon::parse('06:00:00');
-        $end = Carbon::parse('23:30:00');
+        $end = Carbon::parse('23:00:00');
         if($now->between($start, $end)) {
             return $next($request);
         }

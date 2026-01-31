@@ -9,7 +9,7 @@ class AuthController extends Controller
     // Hiển thị form đăng ký
     public function signIn()
     {
-        return view('SignIn');
+        return view('signin');
     }
 
     // Kiểm tra dữ liệu từ form đăng ký
@@ -20,6 +20,7 @@ class AuthController extends Controller
         $password = $request->input('password');
         $repass = $request->input('repass');
         $mssv = $request->input('mssv');
+        $lopquanly = $request->input('lopquanly');
         $lopmonhoc = $request->input('lopmonhoc');
         $gioitinh = $request->input('gioitinh');
 
@@ -29,11 +30,12 @@ class AuthController extends Controller
             'username' => 'kietat',
             'password' => '12022004',
             'mssv' => '3000467',
+            'lopquanly' => '67PM2',
             'lopmonhoc' => '67PM2',
             'gioitinh' => 'nam'
         ];
 
-        // Kiểm tra password và repass có giống nhau không
+        // Kiểm tra password và repass có giống nhau hay không
         if ($password !== $repass) {
             return redirect()->back()
                 ->with('message', 'Đăng ký thất bại! Mật khẩu xác nhận không khớp.')
@@ -41,12 +43,12 @@ class AuthController extends Controller
         }
 
         // Kiểm tra thông tin có trùng với sinh viên không
-        if ($username === $studentInfo['username'] &&
-            $password === $studentInfo['password'] &&
-            $mssv === $studentInfo['mssv'] &&
-            $lopmonhoc === $studentInfo['lopmonhoc'] &&
+        if ($username === $studentInfo['username'] && 
+            $password === $studentInfo['password'] && 
+            $mssv === $studentInfo['mssv'] && 
+            $lopquanly === $studentInfo['lopquanly'] &&
+            $lopmonhoc === $studentInfo['lopmonhoc'] && 
             $gioitinh === $studentInfo['gioitinh']) {
-            
             return redirect()->back()
                 ->with('message', 'Đăng ký thành công!')
                 ->with('type', 'success');
@@ -68,7 +70,7 @@ class AuthController extends Controller
     {
         $age = $request->input('age', 0);
 
-        // Kiểm tra dữ liệu có phải là số không
+        // Kiểm tra dữ liệu có phải là số hay không
         if (!is_numeric($age)) {
             return redirect()->back()
                 ->with('message', 'Tuổi phải là một con số!')

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm mới sản phẩm</title>
+    <title>Chỉnh sửa thông tin sản phẩm</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -78,27 +78,28 @@
 </head>
 <body>
     <div class="container">
-        <h1>Thêm mới sản phẩm</h1>
+        <h1>Chỉnh sửa thông tin sản phẩm</h1>
         
-        <form action="{{ route('product.store') }}" method="POST">
+        <form action="{{ route('product.update', $product->id) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="form-group">
                 <label for="name">Tên sản phẩm <span style="color:red">*</span></label>
-                <input type="text" id="name" name="name" required placeholder="Nhập tên sản phẩm">
+                <input name="name" value="{{ old('name', $product->name) }}" required>
             </div>
 
             <div class="form-group">
                 <label for="price">Giá (VNĐ) <span style="color:red">*</span></label>
-                <input type="number" id="price" name="price" required placeholder="Nhập giá sản phẩm" min="0">
+                <input name="price" type="number" min="0" value="{{ old('price', $product->price) }}" required>
             </div>
 
             <div class="form-group">
                 <label for="stock">Số lượng <span style="color:red">*</span></label>
-                <input type="number" id="stock" name="stock" required placeholder="Nhập số lượng sản phẩm" min="0">
+                <input name="stock" type="number" min="0" value="{{ old('stock', $product->stock) }}" required>
             </div>
 
             <div class="btn-group">
-                <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+                <button type="submit" class="btn btn-primary">Cập nhật sản phẩm</button>
                 <a href="{{ route('product.index') }}" class="btn btn-secondary">Hủy</a>
             </div>
         </form>
