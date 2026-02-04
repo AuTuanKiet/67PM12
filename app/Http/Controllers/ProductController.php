@@ -38,7 +38,7 @@ class ProductController extends Controller implements HasMiddleware
         ]);
 
         Product::create($data);
-        return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công');
+        return redirect()->route('product.index')->with('success', 'Thêm sản phẩm mới thành công');
     }
 
     public function edit(string $id) {
