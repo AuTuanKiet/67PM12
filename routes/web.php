@@ -38,7 +38,7 @@ Route::post('/age/verify', [AuthController::class, 'verifyAge'])->name('age.veri
 Route::prefix('product')->group(function() {
     Route::controller(ProductController::class)->group(function() {
         Route::get('/', 'index')->middleware([CheckTimeAccess::class])->name('product.index');
-        Route::get('/add', 'create')->name('add');
+        Route::get('/add', 'create')->name('product.add');
         Route::get('/detail/{id?}', 'get')->name('product.detail');
         Route::get('/edit/{id}', 'edit')->name('product.edit');
         Route::put('/update/{id}', 'update')->name('product.update');
@@ -59,6 +59,11 @@ Route::get('/banco/{n}', function(int $n) {
 })->whereNumber('n')->name('banco.show');
 
 Route::resource('test', TestController::class);
+
+// Trang admin
+Route::get('/admin', function () {
+    return view('layout.admin');
+})->name('admin');
 
 // Route fallback khi không tìm thấy
 Route::fallback(function() {
