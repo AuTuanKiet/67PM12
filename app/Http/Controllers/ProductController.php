@@ -18,16 +18,16 @@ class ProductController extends Controller implements HasMiddleware
 
     public function index() {
         $products = Product::all();
-        return view('product.index', compact('products'));
+        return view('admin.product.index', compact('products'));
     }
 
     public function get(string $id) {
         $product = Product::findOrFail($id);
-        return view('product.detail', compact('product'));
+        return view('admin.product.detail', compact('product'));
     }
 
     public function create() {
-        return view('product.add');
+        return view('admin.product.add');
     }
 
     public function store(Request $request) { 
@@ -43,7 +43,7 @@ class ProductController extends Controller implements HasMiddleware
 
     public function edit(string $id) {
         $product = Product::findOrFail($id);
-        return view('product.edit', compact('product'));
+        return view('admin.product.edit', compact('product'));
     }
 
     public function update(Request $request, string $id) {
