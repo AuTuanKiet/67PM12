@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Middleware\CheckTimeAccess;
 use App\Http\Middleware\CheckAge;
 
@@ -44,6 +45,18 @@ Route::prefix('product')->group(function() {
         Route::put('/update/{id}', 'update')->name('product.update');
         Route::post('/store', 'store')->name('product.store');
         Route::delete('/delete/{id}', 'destroy')->name('product.destroy');
+    });
+});
+
+// Gom nhóm các route category
+Route::prefix('category')->group(function() {
+    Route::controller(CategoryController::class)->group(function() {
+        Route::get('/', 'index')->name('category.index');
+        Route::get('/add', 'create')->name('category.add');
+        Route::post('/store', 'store')->name('category.store');
+        Route::get('/edit/{id}', 'edit')->name('category.edit');
+        Route::put('/update/{id}', 'update')->name('category.update');
+        Route::delete('/delete/{id}', 'destroy')->name('category.destroy');
     });
 });
 
